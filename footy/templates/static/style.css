@@ -1,0 +1,23 @@
+.title {
+    font-family: Damion, cursive;
+    font-size: 46px;
+    color: #ffffff;
+
+}
+
+.subtitle {
+    font-family: Damion, cursive;
+    font-size: 34px;
+}
+
+.general {
+    background: url("soccer_field.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.logout-btn {
+    float: right;
+
+}

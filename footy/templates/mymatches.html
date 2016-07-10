@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div><h2>Hey there, <span class="subtitle">Playa!</span> Here are your games:</h2></div>
+
+    {% for o in object_list %}
+
+            <h4>Game Title: {{ o.title }}</h4>
+            <h4>Date & Time: {{ o.time |timeuntil }} </h4>
+            <h4>Location: <a href="{{ o.location.url }}">{{ o.location.title }}</a></h4>
+            <h4>Players: </h4>
+                {% for usr in o.users.all %}
+                    <li>{{ usr }}</li>
+                {% endfor %}
+            <h5>{{ event.title }}</h5>
+        <h4>Comments/Extras: {{ o.extras }}</h4>
+        <hr>
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block content %}
+    <div class="container">
+        <h1>Login</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Login
+                </button>
+            {% endbuttons %}
+        </form>
+        <a href="{% url 'footy:signup' %}">
+            <button class="btn btn-primary">Sign Up</button>
+        </a>
+    </div>
+{% endblock %}

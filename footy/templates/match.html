@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load staticfiles bootstrap3 %}
+
+{% block content %}
+
+        <h4>Game Title: {{ object.title }}</h4>
+        <h4>Date & Time: {{ object.time |timeuntil }} </h4>
+        <h4>Location: <a href="{{ o.location.url }}">{{ object.location.title }}</a></h4>
+        <h4>Players: </h4>
+        {% for users in object.users.all %}
+            <li><h5>{{ users.user }}</h5></li>
+        {% endfor %}
+        <h4>Comments/Extras: {{ object.extras }}</h4>
+        <hr>
+
+{% endblock %}

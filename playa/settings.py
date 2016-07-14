@@ -15,6 +15,8 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+GEOS_LIBRARY_PATH = r"C:\OSGeo4W\bin\geos_c.dll"
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -27,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -93,7 +96,7 @@ WSGI_APPLICATION = 'playa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'postgis_22_sample',
+        'NAME': 'playa',
         'USER': 'postgres',
         'PASSWORD': 'orel123',
     }

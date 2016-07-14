@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.gis import forms
 
 from footy.models import UserProfile, Event
 
@@ -29,6 +30,9 @@ class LoginForm(forms.Form):
 
 
 class EventForm(forms.ModelForm):
+    location = forms.PointField(widget=
+                                forms.OSMWidget(attrs={'map_width': 600, 'map_height': 350}))
+
     class Meta:
         model = Event
         fields = (

@@ -1,17 +1,61 @@
 {% extends 'base.html' %}
 {% block content %}
-            <div><h2>What's up, <span class="subtitle">Playa?</span></h2></div>
-            {% for o in object_list %}
-                <h4>Game Title: {{ o.title }}</h4>
-                <h4>Date & Time: {{ o.time |timeuntil }} </h4>
-                <h4>Location: <a href="{{ o.location.url }}">{{ o.location.title }}</a></h4>
-                <h4>Players: </h4>
-                {% for users in o.users.all %}
-                    <h5>{{ users.user }}</h5>
-                {% endfor %}
-                <h4>Comments/Extras: {{ o.extras }}</h4>
-                <hr>
+    <style>
+        html, body {
+
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            right: 0;
+            height: 100%;
+            width: 60%;
+            overflow: auto;
+
+        }
+    </style>
+
+    <div><h2>What's up, <span class="subtitle">Playa?</span></h2></div>
+
+    {% for o in object_list %}
+        <div style="position: relative">
+            <div id="map"></div>
+            <div id="capture"></div>
+            <h4>Game Title: {{ o.title }}</h4>
+            <h4>Date & Time: {{ o.time |timeuntil }} </h4>
+            <h4>Location: <a href="{{ o.location.url }}">{{ o.location.title }}</a></h4>
+
+
+            <h4>Players: </h4>
+            {% for users in o.users.all %}
+                <h5>{{ users.user }}</h5>
             {% endfor %}
+            <h4>Comments/Extras: {{ o.extras }}</h4>
+
+
         </div>
-    </div>
+        <hr>
+        </div>
+
+        <script>
+            var map;
+            var myLatLng = {lat: {{ o.location.points.y }}, lng: {{ o.location.points.x }}};
+            window.initMap = function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: myLatLng,
+                    zoom: 15
+                });
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    title: 'Join!!'
+                });
+            };
+
+        </script>
+    {% endfor %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI&callback=initMap"
+            async defer></script>
 {% endblock %}

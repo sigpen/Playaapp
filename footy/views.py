@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.encoding import escape_uri_path
-from django.views.generic import ListView, CreateView, FormView, DetailView
+from django.views.generic import ListView, CreateView, FormView, DetailView, UpdateView
 from django.views.generic.base import View
 
 from footy.forms import UserForm, LoginForm, EventForm
@@ -114,8 +114,25 @@ class ProfileView(LoggedInMixin, DetailView):
 
 class UserMatchesView(LoggedInMixin, ListView):
     model = Event
-    template_name = 'mymatches.html'
+    template_name = "mymatches.html"
     page_title = "My Matches"
 
     def get_queryset(self):
         return Event.objects.filter(users=self.request.user.profile)
+
+
+class JoinMatchView(LoggedInMixin, UpdateView):
+    model = Event
+    template_name = "match.html"
+    page_title = "Thanks for joining!"
+
+    fields = ['users']
+
+    def get_object(self, queryset=None):
+        user = self.request.user.profile
+        ev = Event.objects.get(pk=self.kwargs['pk'])
+        ev.users.add(user)
+        return ev
+
+    def get_success_url(self):
+        HttpResponseRedirect(reverse('footy:match') + self.kwargs['pk'])

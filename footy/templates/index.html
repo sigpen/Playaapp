@@ -16,27 +16,25 @@
 
         }
     </style>
-
     <div><h2>What's up, <span class="subtitle">Playa?</span></h2></div>
-
     {% for o in object_list %}
-        <div style="position: relative">
+
+        <div style="position: relative; clear: both">
             <div id="map"></div>
-            <div id="capture"></div>
-            <h4>Game Title: {{ o.title }}</h4>
-            <h4>Date & Time: {{ o.time |timeuntil }} </h4>
-            <h4>Location: <a href="{{ o.location.url }}">{{ o.location.title }}</a></h4>
+            <div class="matchdetails">
+                <h4>Game Title: {{ o.title }}</h4>
+                <h4>Date & Time: {{ o.time |timeuntil }} </h4>
+                <h4>Location: <a href="{{ o.location.url }}">{{ o.location.title }}</a></h4>
+                <h4>Players: </h4>
+                {% for users in o.users.all %}
+                    <h5>{{ users.user }}</h5>
+                {% endfor %}
+                <a href="{% url 'footy:join_match' pk=o.pk %}" class="btn btn-success" id="btnjoin">Join</a>
+                <h4>Comments/Extras: {{ o.extras }}</h4>
 
 
-            <h4>Players: </h4>
-            {% for users in o.users.all %}
-                <h5>{{ users.user }}</h5>
-            {% endfor %}
-            <h4>Comments/Extras: {{ o.extras }}</h4>
-
-
-        </div>
-        <hr>
+            </div>
+            <hr>
         </div>
 
         <script>

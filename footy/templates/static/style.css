@@ -21,3 +21,14 @@
     float: right;
 
 }
+
+#btnjoin {
+    float: right;
+    overflow: auto;
+    margin-bottom: 15%;
+}
+
+.matchdetails {
+    width: 39%;
+
+}

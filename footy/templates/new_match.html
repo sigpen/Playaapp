@@ -2,17 +2,56 @@
 {% load staticfiles bootstrap3 %}
 
 {% block content %}
+    <style>
+        html, body {
+
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            position: absolute;
+            right: 0;
+            height: 100%;
+            width: 60%;
+            overflow: auto;
+
+        }
+    </style>
 
     <h1>Create new game</h1> <br>
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
+        <div id="map"></div>
+        <div id="capture"></div>
+        aaa
         {% buttons %}
+
             <button type="submit" class="btn btn-primary">
                 Save {% bootstrap_icon "save" %}
             </button>
         {% endbuttons %}
     </form>
+    <script>
 
+        window.initMap = function initMap() {
+            var myLatlng = new google.maps.LatLng(-25.363882, 131.044922);
+            var mapOptions = {
+                zoom: 4,
+                center: myLatlng
+            }
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+            // Place a draggable marker on the map
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                draggable: true,
+                title: "Drag me!"
+            });
+        };
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI&callback=initMap"
+            async defer></script>
 {% endblock %}

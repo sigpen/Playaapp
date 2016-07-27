@@ -133,7 +133,6 @@ class JoinMatchView(LoggedInMixin, UpdateView):
         ev = Event.objects.get(pk=self.kwargs['pk'])
         ev.users.add(user)
 
-
     def get_context_data(self, **kwargs):
         context = super(JoinMatchView, self).get_context_data(**kwargs)
         context['object_list'] = Event.objects.all()

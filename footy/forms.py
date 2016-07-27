@@ -33,27 +33,6 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=300, widget=forms.PasswordInput())
 
 
-# class LocationForm(geomodels.Model):
-#     url = geomodels.URLField()
-#     title = geomodels.CharField(max_length=200)
-#     points = geomodels.PointField(srid=unit_srid, null=True, blank=True)
-#
-#     class Meta:
-#         model = Location
-#         fields = (
-#             'title',
-#             'points',
-#             'url',
-#         )
-#
-#
-
-
-
-
-EventFormSet = inlineformset_factory(Location, Event, fk_name='location', exclude=('point',))
-
-
 class EventForm(forms.ModelForm):
     location_title = forms.CharField(max_length=300)
 
@@ -87,6 +66,9 @@ class EventForm(forms.ModelForm):
             'users',
             'extras',
         )
+
+
+EventFormSet = inlineformset_factory(Location, Event, fk_name='location', exclude=('point',))
 
 
 class AddUserEventForm(forms.ModelForm):

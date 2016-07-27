@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.encoding import escape_uri_path
-from django.views.generic import ListView, CreateView, FormView, DetailView, UpdateView
+from django.views.generic import ListView, CreateView, FormView, DetailView, UpdateView, DeleteView
 from django.views.generic.base import View
 
 from footy.forms import UserForm, LoginForm, EventForm
@@ -123,7 +123,7 @@ class UserMatchesView(LoggedInMixin, ListView):
 
 class JoinMatchView(LoggedInMixin, UpdateView):
     model = Event
-    template_name = "match.html"
+    template_name = "index.html"
     page_title = "Thanks for joining!"
 
     fields = ['users']
@@ -132,7 +132,26 @@ class JoinMatchView(LoggedInMixin, UpdateView):
         user = self.request.user.profile
         ev = Event.objects.get(pk=self.kwargs['pk'])
         ev.users.add(user)
-        return ev
 
-    def get_success_url(self):
-        HttpResponseRedirect(reverse('footy:match') + self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super(JoinMatchView, self).get_context_data(**kwargs)
+        context['object_list'] = Event.objects.all()
+        return context
+
+
+class LeaveMatchView(LoggedInMixin, DeleteView):
+    model = Event
+    template_name = "index.html"
+
+    fields = ['users']
+
+    def get_object(self, queryset=None):
+        user = self.request.user.profile
+        ev = Event.objects.get(pk=self.kwargs['pk'])
+        ev.users.remove(user)
+
+    def get_context_data(self, **kwargs):
+        context = super(LeaveMatchView, self).get_context_data(**kwargs)
+        context['object_list'] = Event.objects.all()
+        return context

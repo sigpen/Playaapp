@@ -22,7 +22,7 @@
 
 }
 
-#btnjoin {
+.mybtn {
     float: right;
     overflow: auto;
     margin-bottom: 15%;

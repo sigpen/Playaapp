@@ -2,15 +2,23 @@ from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.contrib.gis.db import models
+from django.contrib.gis.geos import Point
 
 unit_srid = 4326
 
 
 class Location(models.Model):
-    url = models.URLField()
+    url = models.URLField(null=True, blank=True)
     title = models.CharField(max_length=200)
-    points = models.PointField(srid=unit_srid, null=True, blank=True)
+    point = models.PointField(srid=unit_srid, null=True, blank=True)
+    lng = models.FloatField(verbose_name='Longitude')
+    lat = models.FloatField(verbose_name='Latitude')
+
     objects = models.GeoManager()
+
+    def save(self, *args, **kwargs):
+        self.point = Point(self.lng, self.lat)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.title)

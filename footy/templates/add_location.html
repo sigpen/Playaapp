@@ -2,104 +2,102 @@
 {% load staticfiles bootstrap3 %}
 
 {% block content %}
-<style>
-    html, body {
+<head>
+    <title> {{ view.page_title }} | Playa ;)</title>
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+    <script src="{% static 'jquery-3.0.0.min.js' %}"></script>
 
-    margin: 0;
-    padding: 0;
-    }
+    <style>
+        html, body {
 
-    #map {
-    position: absolute;
-    right: 0;
-    height: 100%;
-    width: 60%;
-    overflow: auto;
+        margin: 0;
+        padding: 0;
+        }
 
-    }
-    {##}
-    {# html, body {#}
-    {# height: 100%;#}
-    {# margin: 0;#}
-    {# padding: 0;#}
-    {# }#}
-    {##}
-    {# #map {#}
-    {# height: 100%;#}
-    {# }#}
-    {##}
-    {# .controls {#}
-    {# margin-top: 10px;#}
-    {# border: 1px solid transparent;#}
-    {# border-radius: 2px 0 0 2px;#}
-    {# box-sizing: border-box;#}
-    {# -moz-box-sizing: border-box;#}
-    {# height: 32px;#}
-    {# outline: none;#}
-    {# box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);#}
-    {# }#}
-    {##}
-    {# #pac-input {#}
-    {# background-color: #fff;#}
-    {# font-family: Roboto;#}
-    {# font-size: 15px;#}
-    {# font-weight: 300;#}
-    {# margin-left: 12px;#}
-    {# padding: 0 11px 0 13px;#}
-    {# text-overflow: ellipsis;#}
-    {# width: 300px;#}
-    {# }#}
-    {##}
-    {# #pac-input:focus {#}
-    {# border-color: #4d90fe;#}
-    {# }#}
-    {##}
-    {# .pac-container {#}
-    {# font-family: Roboto;#}
-    {# }#}
-    {##}
-    {# #type-selector {#}
-    {# color: #fff;#}
-    {# background-color: #4d90fe;#}
-    {# padding: 5px 11px 0px 11px;#}
-    {# }#}
-    {##}
-    {# #type-selector label {#}
-    {# font-family: Roboto;#}
-    {# font-size: 13px;#}
-    {# font-weight: 300;#}
-    {# }#}
-    {##}
-    {# #target {#}
-    {# width: 345px;#}
-    {# }#}
-</style>
+        #map {
+        position: absolute;
+        right: 0;
+        height: 100%;
+        width: 60%;
+        overflow: auto;
 
+        }
+        {##}
+        {# html, body {#}
+        {# height: 100%;#}
+        {# margin: 0;#}
+        {# padding: 0;#}
+        {# }#}
+        {##}
+        {# #map {#}
+        {# height: 100%;#}
+        {# }#}
+        {##}
+        {# .controls {#}
+        {# margin-top: 10px;#}
+        {# border: 1px solid transparent;#}
+        {# border-radius: 2px 0 0 2px;#}
+        {# box-sizing: border-box;#}
+        {# -moz-box-sizing: border-box;#}
+        {# height: 32px;#}
+        {# outline: none;#}
+        {# box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);#}
+        {# }#}
+        {##}
+        {# #pac-input {#}
+        {# background-color: #fff;#}
+        {# font-family: Roboto;#}
+        {# font-size: 15px;#}
+        {# font-weight: 300;#}
+        {# margin-left: 12px;#}
+        {# padding: 0 11px 0 13px;#}
+        {# text-overflow: ellipsis;#}
+        {# width: 300px;#}
+        {# }#}
+        {##}
+        {# #pac-input:focus {#}
+        {# border-color: #4d90fe;#}
+        {# }#}
+        {##}
+        {# .pac-container {#}
+        {# font-family: Roboto;#}
+        {# }#}
+        {##}
+        {# #type-selector {#}
+        {# color: #fff;#}
+        {# background-color: #4d90fe;#}
+        {# padding: 5px 11px 0px 11px;#}
+        {# }#}
+        {##}
+        {# #type-selector label {#}
+        {# font-family: Roboto;#}
+        {# font-size: 13px;#}
+        {# font-weight: 300;#}
+        {# }#}
+        {##}
+        {# #target {#}
+        {# width: 345px;#}
+        {# }#}
+    </style>
+</head>
 
-<h1>Create new game</h1> <br>
+<h1>Choose A Location</h1> <br>
 
-<form name="new_match" method="post" enctype="multipart/form-data">
+<form name="add_location" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <!--<a class="btn" href="{% url 'footy:add_location' %}"-->
-        <!--onclick="return popitup({% url 'footy:add_location' %})"-->
-<!--&gt;Add Location</a>-->
+    <div id="map">
+
+    </div>
 
     {% buttons %}
-    <button type="submit" class="btn btn-primary">
-        Save {% bootstrap_icon "save" %}
+    <button type="submit" class="btn btn-primary" id="btn">
+        Next {% bootstrap_icon "menu-right" %}
     </button>
     {% endbuttons %}
-    <div id="test"></div>
 </form>
 <script>
-         function popitup(url) {
-	        newwindow=window.open(url,'location','height=300,width=400');
-            if (window.focus) {newwindow.focus()}
-	        return false;
-         }
-
-
         window.initMap = function initMap() {
             var myLatlng = new google.maps.LatLng(32.076 , 34.778);
 
@@ -199,6 +197,16 @@
         {#                map.fitBounds(bounds);#}
         {#            });#}
         {#        }#}
+
+
+
+
+
+
+
+
+
+
 
 
 

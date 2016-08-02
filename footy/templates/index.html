@@ -31,9 +31,9 @@
         <h5>{{ users.user }}</h5>
         {% endfor %}
         {% if request.user.profile not in o.users.all %}
-        <a href="{% url 'footy:join_match' pk=o.pk %}" class="btn btn-success mybtn">Join</a>
+        <a href="{% url 'footy:join_match' pk=o.pk %}" class="btn btn-success mybtn ">Join <span class="glyphicon glyphicon-ok"></span></a>
         {% elif request.user.profile %}
-        <a href="{% url 'footy:leave_match' pk=o.pk %}" class="btn btn-danger mybtn">Leave</a>
+        <a href="{% url 'footy:leave_match' pk=o.pk %}" class="btn btn-danger mybtn">Leave <span class="glyphicon glyphicon-remove"></span></a>
         {% endif %}
         <h4>Comments/Extras: {{ o.extras }}</h4>
 

@@ -34,8 +34,6 @@ class LoginForm(forms.Form):
 
 
 class EventForm(forms.ModelForm):
-    location_title = forms.CharField(max_length=300)
-
     # def save(self, commit=True):
     #     lng = self.cleaned_data['location_lng']
     #     lat = self.cleaned_data['location_lat']
@@ -60,11 +58,9 @@ class EventForm(forms.ModelForm):
         fields = (
             'title',
             'time',
-            # 'location_lng',
-            # 'location_lat',
-            'location',
             'users',
             'extras',
+            'location',
         )
 
 
@@ -76,4 +72,16 @@ class AddUserEventForm(forms.ModelForm):
         model = Event
         fields = (
             'users',
+        )
+
+
+class LocationForm(forms.ModelForm):
+    lat = forms.CharField(widget=forms.TextInput(attrs={'class': 'hidden'}), label='')
+    lng = forms.CharField(widget=forms.TextInput(attrs={'class': 'hidden'}), label='')
+
+    class Meta:
+        model = Location
+        exclude = (
+            'url',
+            'point',
         )

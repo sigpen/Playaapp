@@ -6,9 +6,10 @@ from django.shortcuts import redirect, get_object_or_404
 from django.utils.encoding import escape_uri_path
 from django.views.generic import ListView, CreateView, FormView, DetailView, UpdateView, DeleteView
 from django.views.generic.base import View
+from rest_framework.urls import template_name
 
-from footy.forms import UserForm, LoginForm, EventForm
-from footy.models import Event, UserProfile
+from footy.forms import UserForm, LoginForm, EventForm, LocationForm
+from footy.models import Event, UserProfile, Location
 from . import models
 
 
@@ -154,3 +155,16 @@ class LeaveMatchView(LoggedInMixin, DeleteView):
         context = super(LeaveMatchView, self).get_context_data(**kwargs)
         context['object_list'] = Event.objects.all()
         return context
+
+
+class AddLocationView(LoggedInMixin, CreateView):
+    model = Location
+    template_name = "add_location.html"
+    page_title = "New Location"
+
+    form_class = LocationForm
+    success_url = reverse_lazy('footy:new_match')
+
+
+class CloseView(View):
+    template_name = "close.html"

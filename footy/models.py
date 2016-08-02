@@ -11,7 +11,7 @@ class Location(models.Model):
     url = models.URLField(null=True, blank=True)
     title = models.CharField(max_length=200)
     point = models.PointField(srid=unit_srid, null=True, blank=True)
-    lng = models.FloatField(verbose_name='Longitude')
+    lng = models.FloatField(verbose_name='Longitude' )
     lat = models.FloatField(verbose_name='Latitude')
 
     objects = models.GeoManager()

@@ -6,6 +6,7 @@ app_name = "footy"
 urlpatterns = [
     url(r'^$', ShowGamesView.as_view(), name="show_games"),
     url(r'^new_match/$', CreateEventView.as_view(), name="new_match"),
+    url(r'^add_location/$', AddLocationView.as_view(), name="add_location"),
     url(r'^joined_match/(?P<pk>[0-9]+)/$', JoinMatchView.as_view(), name="join_match"),
     url(r'^leave_match/(?P<pk>[0-9]+)/$', LeaveMatchView.as_view(), name="leave_match"),
     url(r'^my_matches/$', UserMatchesView.as_view(), name="my_matches"),
@@ -15,4 +16,5 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
     url(r'^login/$', LoginView.as_view(), name="login"),
     url(r'^signup/$', CreateUserView.as_view(), name="signup"),
+    url(r'^close/$', CreateUserView.as_view(), name="close"),
 ]

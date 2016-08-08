@@ -17,6 +17,7 @@ class Location(models.Model):
     objects = models.GeoManager()
 
     def save(self, *args, **kwargs):
+        self.url = "http://maps.google.com/?q={},{}".format(self.lat, self.lng)
         self.point = Point(self.lng, self.lat)
         super().save(*args, **kwargs)
 

@@ -2,40 +2,52 @@
 {% load staticfiles bootstrap3 %}
 
 {% block content %}
-    <style>
-        html, body {
+<style>
+    html, body {
 
-            margin: 0;
-            padding: 0;
-        }
+    margin: 0;
+    padding: 0;
+    }
 
-        #map {
-            position: absolute;
-            right: 0;
-            height: 100%;
-            width: 60%;
-            overflow: auto;
+    #map {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 60%;
+    overflow: auto;
 
-        }
-    </style>
-    <div style="position: relative; clear: both">
-        <div id="map"></div>
-        <div class="matchdetails">
-            <h4>Game Title: {{ object.title }}</h4>
-            <h4>Date & Time: {{ object.time |timeuntil }} </h4>
-            <h4>Location: <a href="{{ o.location.url }}">{{ object.location.title }}</a></h4>
-            <h4>Players: </h4>
-            {% for users in object.users.all %}
-                <li><h5>{{ users.user }}</h5></li>
-            {% endfor %}
-            <h4>Comments/Extras: {{ object.extras }}</h4>
-            <hr>
-        </div>
+    }
+</style>
+
+{% for o in object_list %}
+
+<div style="position: relative; clear: both">
+    <div id="map"></div>
+    <div class="matchdetails">
+        <h4>Game Title: {{ o.title }}</h4>
+        <h4>Date & Time: {{ o.time |timeuntil }} </h4>
+        <h4>Location: <a href="{{ o.location.url }}">{{ o.location.title }}</a></h4>
+        <h4>Players: </h4>
+        {% for users in o.users.all %}
+        <h5>{{ users.user }}</h5>
+        {% endfor %}
+        {% if request.user.profile not in o.users.all %}
+        <a href="{% url 'footy:join_match' pk=o.pk %}" class="btn btn-success mybtn ">Join <span
+                class="glyphicon glyphicon-ok"></span></a>
+        {% elif request.user.profile %}
+        <a href="{% url 'footy:leave_match' pk=o.pk %}" class="btn btn-danger mybtn">Leave <span
+                class="glyphicon glyphicon-remove"></span></a>
+        {% endif %}
+        <h4>Comments/Extras: {{ o.extras }}</h4>
+
+
     </div>
+    <hr>
+</div>
 
-    <script>
+<script>
         var map;
-        var myLatLng = {lat: {{ object.location.points.y }}, lng: {{ object.location.points.x }}};
+        var myLatLng = {lat: {{ o.location.point.y }}, lng: {{ o.location.point.x }}};
         window.initMap = function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: myLatLng,
@@ -48,8 +60,10 @@
             });
         };
 
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI&callback=initMap"
-            async defer></script>
 
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI&callback=initMap"
+        async defer></script>
+{% endfor %}
 {% endblock %}

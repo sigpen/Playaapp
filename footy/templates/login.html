@@ -1,21 +1,45 @@
-{% extends 'base.html' %}
 {% load staticfiles %}
 {% load bootstrap3 %}
-{% block content %}
-    <div class="container">
-        <h1>Login</h1>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
 
-        <form method="post">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-primary">
-                    Login
-                </button>
-            {% endbuttons %}
-        </form>
-        <a href="{% url 'footy:signup' %}">
-            <button class="btn btn-primary">Sign Up</button>
-        </a>
-    </div>
-{% endblock %}
+    <style>
+
+    </style>
+    <script src="{% static 'login/js/prefixfree.min.js' %}"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="{% static 'jquery-3.0.0.min.js' %}"></script>
+    <link href="{% static 'login/login.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="body"></div>
+<div class="grad"></div>
+<div class="header">
+    <div>Find <span> A </span>Match</div>
+</div>
+<br>
+<div class="login">
+
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        {% buttons %}
+        <button type="submit" value="Login" class="btn btn-default">
+
+        </button>
+        {% endbuttons %}
+    </form>
+    <a href="{% url 'footy:signup' %}">
+        <button class="btn btn-primary">Sign Up</button>
+    </a>
+</div>
+</div>
+
+</body>
+</html>

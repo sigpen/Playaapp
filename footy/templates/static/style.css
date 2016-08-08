@@ -1,7 +1,7 @@
 .title {
     font-family: Damion, cursive;
     font-size: 46px;
-    color: #ffffff;
+    color: #2A412F;
 
 }
 
@@ -11,11 +11,20 @@
 }
 
 .general {
-    background: url("soccer_field.jpg");
+    background: url("pics/balls.jpg");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto;
+    -webkit-filter: blur(5px); /* Chrome, Safari, Opera */
+    filter: blur(100%);
 
 }
+
+.unblur {
+
+    z-index; 10;
+
+}
+
 
 .logout-btn {
     float: right;
@@ -29,6 +38,136 @@
 }
 
 .matchdetails {
-    width: 39%;
+    width: 50%;
 
+}
+
+.register-input {
+  display: block;
+  width: 50%;
+  height: 38px;
+  margin-top: 2px;
+  font-weight: 500;
+  background: none;
+  outline: 0;
+  border: 0;
+  border-bottom: 1px solid #d8d8d8;
+}
+.register-input:focus {
+  outline: 0;
+}
+
+.form-control {
+        border: 0;
+        border-bottom: 1px solid #555;
+        background-color: #fff;
+        font-weight: 300;
+        padding-right: 0;
+        border-radius: 0;
+        box-shadow: 0 0 0 0;
+        width: 39%;
+
+    }
+.form-control:hover {
+    border-shadow: 0 0 0 0;
+}
+
+.player-list {
+    float: right;
+}
+
+
+.famlogo {
+  font-family: 'Frijole', cursive;
+  font-size: 2.5em;
+  color: black;
+
+}
+
+li > a {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1em;
+    color: #002A09;
+}
+
+.animate
+{
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+
+.action-button
+{
+	padding: 10px 40px;
+    margin: 0px 10px 10px 0px;
+    margin-top: 5%;
+    float: right;
+	border-radius: 10px;
+	font-family: 'Pacifico', cursive;
+	font-size: 25px;
+	color: #FFF;
+	text-decoration: none;
+}
+
+.green
+{
+	background-color: #82BF56;
+	border-bottom: 5px solid #669644;
+	text-shadow: 0px -2px #669644;
+}
+.blue
+{
+	background-color: #3498DB;
+	border-bottom: 5px solid #2980B9;
+	text-shadow: 0px -2px #2980B9;
+}
+
+.red
+{
+	background-color: #E74C3C;
+	border-bottom: 5px solid #BD3E31;
+	text-shadow: 0px -2px #BD3E31;
+}
+
+.yellow
+{
+	background-color: #F2CF66;
+	border-bottom: 5px solid #D1B358;
+	text-shadow: 0px -2px #D1B358;
+}
+
+.action-button:active
+{
+    transform: translate(0px,5px);
+    -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}
+
+h1 {
+        font-family: 'Montserrat', cursive;
+}
+
+h3 {
+    font-family: 'Montserrat', cursive;
+    display: inline;
+}
+
+h4 {
+    font-family: 'Montserrat', cursive;
+
+     display: inline;
+}
+
+body {
+
+}
+
+.gamecard {
+    -webkit-border-radius: 0px
+    ;-moz-border-radius: 0px;
+    border-radius: 0px;
+    -webkit-box-shadow: #B3B3B3 4px 4px 4px;
+    -moz-box-shadow: #B3B3B3 4px 4px 4px;
+    box-shadow: #B3B3B3 4px 4px 4px;
+    background-color: #D0F0CB;
 }

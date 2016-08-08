@@ -1,12 +1,15 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.gis.geos import Point, GEOSGeometry
+from django.contrib.gis.measure import D
+from django.contrib.gis.db.models.functions import Distance
+
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.encoding import escape_uri_path
 from django.views.generic import ListView, CreateView, FormView, DetailView, UpdateView, DeleteView
 from django.views.generic.base import View
-from rest_framework.urls import template_name
 
 from footy.forms import UserForm, LoginForm, EventForm, LocationForm
 from footy.models import Event, UserProfile, Location
@@ -57,6 +60,13 @@ class ShowGamesView(LoggedInMixin, ListView):
     template_name = "index.html"
     page_title = "Games"
 
+    def get_queryset(self):
+        origin = GEOSGeometry('POINT(34.7805 32.0777)', srid=4326)
+        qs = Event.objects.filter(location__point__distance_lte=(origin, D(km=100)))\
+             .annotate(distance=Distance('location__point', origin))
+        return qs.order_by('distance')
+
+
 
 class CreateUserView(CreateView):
     model = User
@@ -84,15 +94,21 @@ class CreateEventView(LoggedInMixin, CreateView):
     model = Event
     form_class = EventForm
     template_name = "new_match.html"
-    page_title = "Create New Match"
+    page_title = "Create A New Match"
 
     success_url = reverse_lazy('footy:show_games')
 
 
-class ShowEventView(LoggedInMixin, DetailView):
+class NearByMatchesView(LoggedInMixin, ListView):
     model = Event
     template_name = "match.html"
     page_title = "Nearby Games"
+
+    def get_queryset(self):
+        origin = GEOSGeometry('POINT(34.7805 32.0777)', srid=4326)
+        qs = Event.objects.filter(location__point__distance_lte=(origin, D(km=100)))\
+             .annotate(distance=Distance('location__point', origin))
+        return qs.order_by('distance')
 
 
 class MyProfileView(LoggedInMixin, DetailView):

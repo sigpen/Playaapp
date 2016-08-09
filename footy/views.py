@@ -61,11 +61,16 @@ class ShowGamesView(LoggedInMixin, ListView):
     page_title = "Games"
 
     def get_queryset(self):
-        origin = GEOSGeometry('POINT(34.7805 32.0777)', srid=4326)
-        qs = Event.objects.filter(location__point__distance_lte=(origin, D(km=100)))\
-             .annotate(distance=Distance('location__point', origin))
-        return qs.order_by('distance')
-
+        if (self.request.GET):
+            lat = self.request.GET['lat']
+            lng = self.request.GET['lng']
+        else:
+            lat = 32.0777
+            lng = 34.7805
+        origin = GEOSGeometry('POINT({} {})'.format(lng, lat), srid=4326)
+        qs = Event.objects.filter(location__point__distance_lte=(origin, D(km=100))) \
+            .annotate(distance=Distance('location__point', origin)).order_by('distance')
+        return qs
 
 
 class CreateUserView(CreateView):
@@ -101,14 +106,20 @@ class CreateEventView(LoggedInMixin, CreateView):
 
 class NearByMatchesView(LoggedInMixin, ListView):
     model = Event
-    template_name = "match.html"
+    template_name = "nearby_matches.html"
     page_title = "Nearby Games"
 
     def get_queryset(self):
-        origin = GEOSGeometry('POINT(34.7805 32.0777)', srid=4326)
-        qs = Event.objects.filter(location__point__distance_lte=(origin, D(km=100)))\
-             .annotate(distance=Distance('location__point', origin))
-        return qs.order_by('distance')
+        if (self.request.GET):
+            lat = self.request.GET['lat']
+            lng = self.request.GET['lng']
+        else:
+            lat = 32.0777
+            lng = 34.7805
+        origin = GEOSGeometry('POINT({} {})'.format(lng, lat), srid=4326)
+        qs = Event.objects.filter(location__point__distance_lte=(origin, D(km=100))) \
+            .annotate(distance=Distance('location__point', origin)).order_by('distance')
+        return qs
 
 
 class MyProfileView(LoggedInMixin, DetailView):

@@ -5,47 +5,46 @@
     <title> {{ view.page_title }} | Playa ;)</title>
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'style.css' %}" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Damion|Yesteryear|Grand+Hotel|Sail|Miniver' rel='stylesheet'
-          type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans|Slabo+27px|Montserrat|Roboto+Slab|Faster+One|Frijole|Fascinate+Inline|Black+Ops+One' rel='stylesheet' type='text/css'>
+    <link href="{% static 'jquery-3.0.0.min.js' %}" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans|Slabo+27px|Montserrat|Roboto+Slab|Faster+One|Frijole|Fascinate+Inline|Black+Ops+One'
+          rel='stylesheet' type='text/css'>
 
 
 </head>
 <body>
 
-<div class="container">
-        <nav class="navbar" >
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <a class="navbar-brand famlogo" href="{% url 'footy:show_games' %}">Find A Match</a>
+<div class="container" style="background: url('pics/color-player.jpg'); ">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand famlogo" href="{% url 'footy:show_games' %}?{{ request.GET.urlencode }}">Find A Match</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav btn-group-lg">
+                    <li><a href="{% url 'footy:nearby_matches' %}?{{ request.GET.urlencode }}"><span
+                            class="glyphicon glyphicon-map-marker"></span> NEARBY MATCHES</a></li>
+                    <li><a href="{% url 'footy:add_location' %}?{{ request.GET.urlencode }}"> CREATE A NEW MATCH</a></li>
+                    <li><a href="{% url 'footy:my_matches' %}"> MY MATCHES</a></li>
+                    <li><a href="{% url 'footy:my_profile' %}"> PROFILE</a></li>
+                    <li><a href="{% url 'footy:logout' %}">
+                        <span class="glyphicon glyphicon-off"> </span> Log out
+                    </a>
+                    </li>
+                </ul>
+                <div class="navbar-right navbar-btn">
+
                 </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav btn-group-lg">
-                        <li><a href="{% url 'footy:nearby_matches' %}"><span class="glyphicon glyphicon-map-marker"></span> NEARBY MATCHES</a></li>
-                        <li><a href="{% url 'footy:add_location' %}"> CREATE A NEW MATCH</a></li>
-                        <li><a href="{% url 'footy:my_matches' %}"> MY MATCHES</a></li>
-                        <li><a href="{% url 'footy:my_profile' %}"> PROFILE</a></li>
-                        <li><a href="{% url 'footy:logout' %}" >
-                            <span class="glyphicon glyphicon-off"> </span> Log out
-                        </a>
-                        </li>
-                    </ul>
-                    <div class="navbar-right navbar-btn">
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 
-                    </div>
+    {% block content %}
 
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-
-
-
-        {% block content %}
-
-        {% endblock %}
+    {% endblock %}
 
 </div>
 </body>

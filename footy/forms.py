@@ -29,8 +29,8 @@ class UserForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=300, widget=forms.TextInput(attrs={'type':'text', 'placeholder':'Username', 'name':'user'}), label='')
-    password = forms.CharField(max_length=300, widget=forms.PasswordInput(attrs={'type':'text', 'placeholder':'Password', 'name':'password'}), label='')
+    username = forms.CharField(max_length=300)
+    password = forms.CharField(max_length=300, widget=forms.PasswordInput())
 
 
 class EventForm(forms.ModelForm):

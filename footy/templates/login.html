@@ -1,5 +1,5 @@
-{% load staticfiles %}
-{% load bootstrap3 %}
+{% extends 'base.html' %}
+{% load staticfiles bootstrap3 %}
 <html>
 <head>
     <meta charset="UTF-8">
@@ -14,23 +14,23 @@
     <link href="{% static 'login/login.css' %}" rel="stylesheet">
 
 </head>
-
 <body>
+{% block content%}
 
-<div class="body"></div>
-<div class="grad"></div>
-<div class="header">
-    <div>Find <span> A </span>Match</div>
-</div>
-<br>
-<div class="login">
 
+<!--<div class="body"></div>-->
+<!--<div class="grad"></div>-->
+<!--<div class="header">-->
+    <!--<div>Find <span> A </span>Match</div>-->
+<!--</div>-->
+<!--<br>-->
+<!--<div class="login">-->
     <form method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
 
         {% buttons %}
-        <button type="submit" value="Login" class="btn btn-default">
+        <button type="submit" value="Login" class="btn btn-default">Login
 
         </button>
         {% endbuttons %}
@@ -38,8 +38,8 @@
     <a href="{% url 'footy:signup' %}">
         <button class="btn btn-primary">Sign Up</button>
     </a>
-</div>
-</div>
-
+<!--</div>-->
+<!--</div>-->
+{% endblock %}
 </body>
 </html>

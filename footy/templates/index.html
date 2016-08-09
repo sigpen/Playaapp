@@ -1,21 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-<style>
-    html, body {
-
-    margin: 0;
-    padding: 0;
-    }
-
-    #map {
-    position: absolute;
-    right: 0;
-    height: 100%;
-    width: 60%;
-    overflow: auto;
-
-    }
-</style>
 {% for o in object_list %}
 
 <div style="position: relative; clear: both; ">
@@ -45,12 +29,12 @@
              var startPos;
              var geoSuccess = function(position) {
              startPos = position;
-             console.log(startPos.coords.latitude);
-             console.log(startPos.coords.longitude);
+             var location = window.location.href;
+             if(!location.includes('?'))
+               window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
              };
              navigator.geolocation.getCurrentPosition(geoSuccess);
              };
-
 
             var map;
             var myLatLng = {lat: {{ o.location.point.y }}, lng: {{ o.location.point.x }}};

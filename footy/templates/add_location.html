@@ -23,7 +23,7 @@
 </head>
 
 <div>
-    <h1 id="title" style="float: left;">Add a new location:</h1>
+    <h1 id="title" style="float: left;">Add a new location</h1>
     <div style="float: right;">
         <a href="{% url 'footy:new_match' %}"><button type="button" class="action-button shadow animate blue mybtn"><h2 style="color: white;">Choose an existing
             location</h2></button></a>
@@ -33,9 +33,7 @@
     {% csrf_token %}
     {% bootstrap_form form %}
 
-    <div id="map">
-
-    </div>
+    <div id="map"></div>
 
     {% buttons %}
     <button type="submit" class="btn btn-primary btn-lg" id="btn" style="float: right;">
@@ -45,18 +43,19 @@
 </form>
 <script>
         initMap = function initMap() {
-        window.onload = function() {
-             var startPos;
-             var geoSuccess = function(position) {
-
-                    startPos = position;
-                    console.log(position);
-                    console.log(startPos.coords.latitude);
-                    console.log(startPos.coords.longitude);
-             };
+            var myLatlng = new google.maps.LatLng(32.0787319, 34.789688);
+            window.onload = function() {
+                var startPos;
+                var geoSuccess = function(position) {
+                startPos = position;
+                var location = window.location.href
+                if(!location.includes('?'))
+                    window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
+                    myLatlng = new google.maps.LatLng(startPos.coords.latitude, startPos.coords.longitude);
+                };
              navigator.geolocation.getCurrentPosition(geoSuccess);
              };
-            var myLatlng = new google.maps.LatLng( -34.397, 150.644);
+
 
             var mapOptions = {
                 zoom: 15,
@@ -71,12 +70,12 @@
                 draggable: true,
                 title: "Drag me!"
             });
-            document.getElementById("id_lng").value =  myLatlng.lat().toFixed(4);
-            document.getElementById("id_lat").value =  myLatlng.lat().toFixed(4);
+            document.getElementById("id_lng").value =  myLatlng.lng();
+            document.getElementById("id_lat").value =  myLatlng.lat();
 
             google.maps.event.addListener(marker, 'dragend', function (evt) {
-                document.getElementById("id_lng").value =  evt.latLng.lng().toFixed(4);
-                document.getElementById("id_lat").value =  evt.latLng.lat().toFixed(4);
+                document.getElementById("id_lng").value =  evt.latLng.lng();
+                document.getElementById("id_lat").value =  evt.latLng.lat();
              });
 
          if (navigator.geolocation) {
@@ -96,13 +95,11 @@
           handleLocationError(false, map.getCenter());
         }
 
-
       function handleLocationError(browserHasGeolocation, pos) {
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
                               'Error: The Geolocation service failed.' :
                               'Error: Your browser doesn\'t support geolocation.');
-
         };
 
 };

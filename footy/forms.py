@@ -9,10 +9,12 @@ from footy.models import Event, Location, UserProfile
 unit_srid = 4326
 
 
+# Django's auth user model field
 class UserForm(forms.ModelForm):
     password = forms.CharField(max_length=200, widget=forms.PasswordInput())
     phone_number = forms.CharField(max_length=200)
 
+    # Hashing password
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password'])
@@ -33,6 +35,8 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=300, widget=forms.PasswordInput())
 
 
+# TODO Search for users.
+# Adding class to the input fields.
 class EventForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'class': 'register-input'}))
     extras = forms.CharField(widget=forms.TextInput(attrs={'class': 'register-input'}))
@@ -40,12 +44,10 @@ class EventForm(forms.ModelForm):
         widget=forms.SelectMultiple(attrs={'class': 'player-list'}),
         queryset=UserProfile.objects.all(),
         label=''
-
     )
 
     class Meta:
         model = Event
-
         fields = (
             'users',
             'location',
@@ -53,15 +55,6 @@ class EventForm(forms.ModelForm):
             'time',
             'extras',
         )
-
-
-class AddUserEventForm(forms.ModelForm):
-    class Meta:
-        model = Event
-        fields = (
-            'users',
-        )
-
 
 class LocationForm(forms.ModelForm):
     lng = forms.CharField(widget=forms.TextInput(attrs={'class': 'hidden'}), label='')

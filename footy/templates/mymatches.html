@@ -1,20 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-<div><h2>Hey there, <span class="subtitle">Playa!</span> Here are your matches:</h2></div>
-
 {% for o in object_list %}
-
-<h3>Game Title: </h3><h4>{{ o.title }}</h4><br/>
-<h3>Date & Time: </h3><h4>{{ o.time |timeuntil }}</h4><br/>
-<h3>Location: </h3><h4><a href="{{ o.location.url }}">{{ o.location.title }}</a></h4><br/>
-<h4>Players: </h4>
-{% for usr in o.users.all %}
-<li>{{ usr }}</li>
+    <h3>Game Title: </h3><h4>{{ o.title }}</h4><br/>
+    <h3>Date & Time: </h3><h4>{{ o.time |timeuntil }}</h4><br/>
+    <h3>Location: </h3><h4><a href="{{ o.location.url }}">{{ o.location.title }}</a></h4><br/>
+    <h3>Players: </h3>
+    {% for usr in o.users.all %}
+        <h4>{{ usr }}</h4><br/>
+    {% endfor %}
+    <h5>{{ event.title }}</h5>
+    <h3>Comments/Extras:</h3> <h4>{{ o.extras }}</h4>
+    <hr>
 {% endfor %}
-<h5>{{ event.title }}</h5>
-<h4>Comments/Extras: {{ o.extras }}</h4>
-<hr>
-{% endfor %}
-</div>
-</div>
 {% endblock %}

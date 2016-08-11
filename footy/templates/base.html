@@ -5,23 +5,18 @@
     <title> {{ view.page_title }} | Playa ;)</title>
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'style.css' %}" rel="stylesheet">
-    <link href="{% static 'jquery-3.0.0.min.js' %}" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans|Slabo+27px|Montserrat|Roboto+Slab|Faster+One|Frijole|Fascinate+Inline|Black+Ops+One'
           rel='stylesheet' type='text/css'>
-
-
 </head>
 <body>
-
-<div class="container" style="background: url('pics/color-player.jpg'); ">
+<!--Navigation bar-->
+<div class="container">
     <nav class="navbar">
         <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand famlogo" href="{% url 'footy:show_games' %}?{{ request.GET.urlencode }}">Find A Match</a>
+                <a class="navbar-brand famlogo" href="{% url 'footy:show_matches' %}?{{ request.GET.urlencode }}">Find A
+                   Match</a>   <!--url contains query strings of lat & lng-->
             </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav btn-group-lg">
                     <li><a href="{% url 'footy:nearby_matches' %}?{{ request.GET.urlencode }}"><span
@@ -30,22 +25,16 @@
                     <li><a href="{% url 'footy:my_matches' %}"> MY MATCHES</a></li>
                     <li><a href="{% url 'footy:my_profile' %}"> PROFILE</a></li>
                     <li><a href="{% url 'footy:logout' %}">
-                        <span class="glyphicon glyphicon-off"> </span> Log out
-                    </a>
+                        <span class="glyphicon glyphicon-off"> </span> Log out</a>
                     </li>
                 </ul>
                 <div class="navbar-right navbar-btn">
-
                 </div>
-
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-
     {% block content %}
-
     {% endblock %}
-
 </div>
 </body>
 </html>

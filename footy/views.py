@@ -3,27 +3,27 @@ from django.contrib.auth.models import User
 from django.contrib.gis.geos import Point, GEOSGeometry
 from django.contrib.gis.measure import D
 from django.contrib.gis.db.models.functions import Distance
-
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.encoding import escape_uri_path
 from django.views.generic import ListView, CreateView, FormView, DetailView, UpdateView, DeleteView
 from django.views.generic.base import View
-
 from footy.forms import UserForm, LoginForm, EventForm, LocationForm
 from footy.models import Event, UserProfile, Location
 from . import models
 
 
+# Validating user's username and password
 class LoginView(FormView):
     form_class = LoginForm
     template_name = "login.html"
     page_title = "Login"
 
+    # Checks if user is already logged in
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated():
-            return redirect('footy:show_games')
+            return redirect('footy:show_matches')
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -35,18 +35,21 @@ class LoginView(FormView):
             if self.request.GET.get('from'):
                 return redirect(
                     self.request.GET['from'])  # SECURITY: check path
-            return redirect('footy:show_games')
+            return redirect('footy:show_matches')
 
+        # Returns an error if authentication failed
         form.add_error(None, "Invalid user name or password")
         return self.form_invalid(form)
 
 
+# User Logout
 class LogoutView(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse('footy:login'))
 
 
+# Checks if user is already logged in, and redirects the former page
 class LoggedInMixin:
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
@@ -55,11 +58,18 @@ class LoggedInMixin:
         return super().dispatch(request, *args, **kwargs)
 
 
-class ShowGamesView(LoggedInMixin, ListView):
+# Presenting close matches via list
+class ShowMatchesView(LoggedInMixin, ListView):
     model = Event
     template_name = "index.html"
     page_title = "Games"
 
+    def get_object(self):
+        user = self.request.user.profile
+        ev = Event.objects.get(pk=self.kwargs['pk'])
+        ev.users.add(user)
+
+    # GET latitude and longitude parameters and return filtered by distance results
     def get_queryset(self):
         if (self.request.GET):
             lat = self.request.GET['lat']
@@ -73,17 +83,19 @@ class ShowGamesView(LoggedInMixin, ListView):
         return qs
 
 
+# Sign up view
 class CreateUserView(CreateView):
     model = User
     form_class = UserForm
     template_name = "signup.html"
     page_title = "Sign Up"
 
-    success_url = reverse_lazy('footy:show_games')
+    success_url = reverse_lazy('footy:show_matches')
 
+    # Creates User & UserProfile objects and logging in
     def form_valid(self, form):
         resp = super().form_valid(form)
-        profile = models.UserProfile.objects.create(
+        models.UserProfile.objects.create(
             user=form.instance,
             phone_number=form.cleaned_data['phone_number']
         )
@@ -95,15 +107,17 @@ class CreateUserView(CreateView):
         return resp
 
 
+# Creates a new match form
 class CreateEventView(LoggedInMixin, CreateView):
     model = Event
     form_class = EventForm
     template_name = "new_match.html"
     page_title = "Create A New Match"
 
-    success_url = reverse_lazy('footy:show_games')
+    success_url = reverse_lazy('footy:show_matches')
 
 
+# Presents nearby matches using a map
 class NearByMatchesView(LoggedInMixin, ListView):
     model = Event
     template_name = "nearby_matches.html"
@@ -122,6 +136,7 @@ class NearByMatchesView(LoggedInMixin, ListView):
         return qs
 
 
+# Presents current user profile data
 class MyProfileView(LoggedInMixin, DetailView):
     model = UserProfile
     template_name = "profile.html"
@@ -131,6 +146,7 @@ class MyProfileView(LoggedInMixin, DetailView):
         return self.request.user.profile
 
 
+# Presents any user profile using it's pk as a parameter
 class ProfileView(LoggedInMixin, DetailView):
     model = UserProfile
     template_name = "profile.html"
@@ -140,6 +156,7 @@ class ProfileView(LoggedInMixin, DetailView):
         return get_object_or_404(UserProfile, pk=self.kwargs.get('pk'))
 
 
+# Current user's matches
 class UserMatchesView(LoggedInMixin, ListView):
     model = Event
     template_name = "mymatches.html"
@@ -149,39 +166,37 @@ class UserMatchesView(LoggedInMixin, ListView):
         return Event.objects.filter(users=self.request.user.profile)
 
 
+# TODO: redirect to index after joining a match
+# Adds current user to a match and presents nearby matches
 class JoinMatchView(LoggedInMixin, UpdateView):
     model = Event
-    template_name = "index.html"
+    template_name = "match.html"
     page_title = "Thanks for joining!"
 
     fields = ['users']
 
+    # Get current user's object and add to the match's player list
     def get_object(self, queryset=None):
         user = self.request.user.profile
         ev = Event.objects.get(pk=self.kwargs['pk'])
         ev.users.add(user)
-
-    def get_context_data(self, **kwargs):
-        context = super(JoinMatchView, self).get_context_data(**kwargs)
-        context['object_list'] = Event.objects.all()
-        return context
+        return ev
 
 
+# TODO: redirect to index after joining a match
+# Deletes current user from a match and presents nearby matches
 class LeaveMatchView(LoggedInMixin, DeleteView):
     model = Event
-    template_name = "index.html"
+    template_name = "match.html"
 
     fields = ['users']
 
+    # Get current user's object and remove from the Match's player list
     def get_object(self, queryset=None):
         user = self.request.user.profile
         ev = Event.objects.get(pk=self.kwargs['pk'])
         ev.users.remove(user)
-
-    def get_context_data(self, **kwargs):
-        context = super(LeaveMatchView, self).get_context_data(**kwargs)
-        context['object_list'] = Event.objects.all()
-        return context
+        return ev
 
 
 class AddLocationView(LoggedInMixin, CreateView):
@@ -191,7 +206,3 @@ class AddLocationView(LoggedInMixin, CreateView):
 
     form_class = LocationForm
     success_url = reverse_lazy('footy:new_match')
-
-
-class CloseView(View):
-    template_name = "close.html"

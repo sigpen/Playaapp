@@ -7,6 +7,9 @@ from django.contrib.gis.geos import Point
 unit_srid = 4326
 
 
+# Creating database
+
+# Location field
 class Location(models.Model):
     url = models.URLField(null=True, blank=True)
     title = models.CharField(max_length=200)
@@ -16,6 +19,8 @@ class Location(models.Model):
 
     objects = models.GeoManager()
 
+    # Create a Google Maps url with Latitude & Longtitude as values.
+    # Save Latitude & Longtitude (Float fields) as Point (PointField).
     def save(self, *args, **kwargs):
         self.url = "http://maps.google.com/?q={},{}".format(self.lat, self.lng)
         self.point = Point(self.lng, self.lat)
@@ -25,6 +30,8 @@ class Location(models.Model):
         return str(self.title)
 
 
+# UserProfile field.
+# User field is a FK to Django's AUTH USER MODEL containing: username, password and email address.
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile')
     phone_number = models.CharField(max_length=22, blank=True, null=True)
@@ -34,6 +41,7 @@ class UserProfile(models.Model):
         return str("{}".format(self.user))
 
 
+# Event field (Matches)
 class Event(models.Model):
     title = models.CharField(max_length=200)
     time = models.DateTimeField(default=datetime.now() + timedelta(days=1))

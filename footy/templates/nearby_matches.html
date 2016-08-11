@@ -1,97 +1,66 @@
 {% extends 'base.html' %}
 {% load staticfiles bootstrap3 %}
-
 {% block content %}
-<script src="http://maps.google.com/maps/api/js??key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI&sensor=false"
-        type="text/javascript"></script>
+<!--<script src="http://maps.google.com/maps/api/js??key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI&sensor=false"-->
+        <!--type="text/javascript"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI"
+async defer></script>
 
-<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI&callback=initMap"-->
-<!--async defer></script>-->
-
-<style>
-    html, body {
-
-    margin: 0;
-    padding: 0;
-    }
-
-    #map {
-    height: 80%;
-    width: 80%;
-    overflow: auto;
-    margin:auto;
-
-    }
-
-    @media(max-width:500px){
-    #map {
-    width: 100%;
-    }
-    .container {
-    width: 100%;
-    padding:0;
-    }
-    }
-</style>
-
-<div id="map"></div>
-
+<div id="nearby_map"></div>
 <script>
 <!--Mapping the location list script -->
 
 var location_list = []
 
-
 {% for o in object_list %}
-var obj = {
-title:  "{{ o.title }} ",
-lat:{{ o.location.point.y }},
-lng: {{ o.location.point.x }}
-}
-
+    var obj = {
+    title: "{{ o.title }}",
+    lat: {{ o.location.point.y }},
+    lng: {{ o.location.point.x }}
+    }
 location_list.push(obj);
 {% endfor %}
 
-
-</script>
-
-<script>
- window.onload = function() {
+//Getting user's current location
+window.onload = function() {
     var startPos;
     var geoSuccess = function(position) {
-    startPos = position;
-    var location = window.location.href
-    if(!location.includes('?'))
-      window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
+        startPos = position;
+        var location = window.location.href;
+        if(!location.includes('?lat')) {
+            window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
+        };
     };
     navigator.geolocation.getCurrentPosition(geoSuccess);
-    };
 
- var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 10,
-      center: new google.maps.LatLng(32.071290, 34.793810),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+
+    //Creating a map
+    var map = new google.maps.Map(document.getElementById('nearby_map'), {
+        zoom: 10,
+        center: new google.maps.LatLng(32.071290, 34.793810),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
-    var infowindow = new google.maps.InfoWindow();
-
+    //Adding markers to the map
     var marker, i;
-        for (i = 0; i < location_list.length; i++) {
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng(location_list[i].lat, location_list[i].lng),
-                map: map
-      });
+    for (i = 0; i < location_list.length; i++) {
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(location_list[i].lat, location_list[i].lng),
+            map: map
+        });
 
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
-          infowindow.setContent(location_list[i].title);
-          infowindow.open(map, marker);
-        }
-      })(marker, i));
-
+        //Adding InfoWindow of matches to the map
+        var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+           return function() {
+               infowindow.setContent(location_list[i].title);
+               infowindow.open(map, marker);
+           }
+        })(marker, i));
     }
-
+}
 </script>
+
+
+
 {% endblock %}
-
-

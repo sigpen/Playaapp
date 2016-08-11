@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div style="position: relative;">
+    <div class="matchdetails">
+        <h3>Game Title: </h3><h4>{{ object.title }}</h4><br/>
+        <h3>Date & Time: </h3><h4>{{ object.time |timeuntil }}</h4><br/>
+        <h3>Location: </h3><h4><a href="{{ object.location.url }}">{{ object.location.title }}</a></h4><br/>
+        {% if request.user.profile not in object.users.all %}
+                <a href="{% url 'footy:join_match' pk=object.pk %}" class="action-button shadow animate green mybtn">Join <span class="glyphicon glyphicon-ok"></span></a>
+        {% elif request.user.profile %}
+                <a href="{% url 'footy:leave_match' pk=object.pk %}" class="action-button shadow animate red mybtn">Leave <span class="glyphicon glyphicon-remove"></span></a>
+        {% endif %}
+        <h3>Players: </h3><br/>
+        {% for users in object.users.all %}
+            <h4>{{ users.user }}</h4><br/>
+        {% endfor %}
+        <h3>Comments/Extras:</h3> <h4> {{ object.extras }}</h4><br/>
+        <hr>
+    </div>
+</div>
+
+
+{% endblock %}

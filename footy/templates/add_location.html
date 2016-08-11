@@ -1,114 +1,97 @@
 {% extends 'base.html' %}
 {% load staticfiles bootstrap3 %}
-
 {% block content %}
 <head>
-    <title> {{ view.page_title }} | Playa ;)</title>
+    <title> {{ view.page_title }} | Find A Match ;)</title>
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'style.css' %}" rel="stylesheet">
-    <script src="{% static 'jquery-3.0.0.min.js' %}"></script>
-
-    <style>
-        #map {
-        position: relative;
-        right: 0;
-
-        height: 50%;
-        width: 50%;
-        overflow: auto;
-
-        }
-
-    </style>
 </head>
-
 <div>
     <h1 id="title" style="float: left;">Add a new location</h1>
     <div style="float: right;">
-        <a href="{% url 'footy:new_match' %}"><button type="button" class="action-button shadow animate blue mybtn"><h2 style="color: white;">Choose an existing
-            location</h2></button></a>
+        <a href="{% url 'footy:new_match' %}">
+            <button type="button" class="action-button shadow animate blue mybtn location_exist"><h3>Choose an
+                existing location</h3></button>
+        </a>
     </div>
 </div>
 <form name="add_location" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
-
-    <div id="map"></div>
-
+        <div id="addlocation_map"></div>
     {% buttons %}
-    <button type="submit" class="btn btn-primary btn-lg" id="btn" style="float: right;">
-        Next {% bootstrap_icon "menu-right" %}
-    </button>
+        <button type="submit" class="btn btn-primary btn-lg" id="btn" style="float: right;">
+            Next {% bootstrap_icon "menu-right" %}
+        </button>
     {% endbuttons %}
 </form>
 <script>
-        initMap = function initMap() {
-            var myLatlng = new google.maps.LatLng(32.0787319, 34.789688);
-            window.onload = function() {
-                var startPos;
-                var geoSuccess = function(position) {
-                startPos = position;
-                var location = window.location.href
-                if(!location.includes('?'))
-                    window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
-                    myLatlng = new google.maps.LatLng(startPos.coords.latitude, startPos.coords.longitude);
-                };
-             navigator.geolocation.getCurrentPosition(geoSuccess);
-             };
+window.onload = function() {
+    var myLatlng = new google.maps.LatLng(32.071290, 34.793810) // Setting a default lat & lng values
+    var startPos;
+    console.log("1st");
+    var geoSuccess = function(position) {
+        startPos = position;
+        var location = window.location.href;
+        console.log('wtf 1');
+        // Checking if lat & lng already been taken in the previous pages
+        if(!location.includes('?lat')){
+            window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
+        }
+        myLatlng = new google.maps.LatLng(startPos.coords.latitude, startPos.coords.longitude);
+    }
+    navigator.geolocation.getCurrentPosition(geoSuccess);
+            console.log('wtf');
 
-
-            var mapOptions = {
-                zoom: 15,
-                center: myLatlng
-            }
-            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-            // Place a draggable marker on the map
-            var marker = new google.maps.Marker({
-                position: myLatlng,
-                map: map,
-                draggable: true,
-                title: "Drag me!"
-            });
-            document.getElementById("id_lng").value =  myLatlng.lng();
-            document.getElementById("id_lat").value =  myLatlng.lat();
-
-            google.maps.event.addListener(marker, 'dragend', function (evt) {
-                document.getElementById("id_lng").value =  evt.latLng.lng();
-                document.getElementById("id_lat").value =  evt.latLng.lat();
-             });
-
-         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
             };
-
             marker.setPosition(pos);
             map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, map.getCenter());
-          });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, map.getCenter());
+            }, function() {
+                handleLocationError(true, map.getCenter());
+                });
+            } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, map.getCenter());
         }
 
-      function handleLocationError(browserHasGeolocation, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
+        function handleLocationError(browserHasGeolocation, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
         };
 
-};
+        // Setting map's settings
+        var mapOptions = {
+            zoom: 15,
+            center: myLatlng
+        }
+        var map = new google.maps.Map(document.getElementById("addlocation_map"), mapOptions);
 
-    </script>
+        // Place a draggable marker on the map
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            draggable: true,
+            title: "Drag me!"
+        });
 
+         // Pass lat & lng values to the form
+         document.getElementById("id_lng").value =  myLatlng.lng();
+         document.getElementById("id_lat").value =  myLatlng.lat();
 
-
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI&libraries=places&callback=initMap"
+         // Save changes of dragged marker
+         google.maps.event.addListener(marker, 'dragend', function (evt) {
+             document.getElementById("id_lng").value =  evt.latLng.lng();
+             document.getElementById("id_lat").value =  evt.latLng.lat();
+         });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI"
         async defer></script>
 {% endblock %}

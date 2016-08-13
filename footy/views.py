@@ -14,6 +14,7 @@ from footy.models import Event, UserProfile, Location
 from . import models
 
 
+# TODO Add Facebook and Google sign-ins
 # Validating user's username and password
 class LoginView(FormView):
     form_class = LoginForm
@@ -58,6 +59,7 @@ class LoggedInMixin:
         return super().dispatch(request, *args, **kwargs)
 
 
+# TODO filter expired matches
 # Presenting close matches via list
 class ShowMatchesView(LoggedInMixin, ListView):
     model = Event
@@ -117,6 +119,7 @@ class CreateEventView(LoggedInMixin, CreateView):
     success_url = reverse_lazy('footy:show_matches')
 
 
+# TODO filter expired matches
 # Presents nearby matches using a map
 class NearByMatchesView(LoggedInMixin, ListView):
     model = Event
@@ -199,6 +202,9 @@ class LeaveMatchView(LoggedInMixin, DeleteView):
         return ev
 
 
+# TODO Select automatically the added location in the create match
+# TODO Add Address and a search bar
+# Adding location to the Match's location list
 class AddLocationView(LoggedInMixin, CreateView):
     model = Location
     template_name = "add_location.html"

@@ -56,6 +56,7 @@ class EventForm(forms.ModelForm):
             'extras',
         )
 
+
 class LocationForm(forms.ModelForm):
     lng = forms.CharField(widget=forms.TextInput(attrs={'class': 'hidden'}), label='')
     lat = forms.CharField(widget=forms.TextInput(attrs={'class': 'hidden'}), label='')

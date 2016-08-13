@@ -9,6 +9,7 @@ unit_srid = 4326
 
 # Creating database
 
+# TODO Add address field
 # Location field
 class Location(models.Model):
     url = models.URLField(null=True, blank=True)
@@ -30,6 +31,7 @@ class Location(models.Model):
         return str(self.title)
 
 
+# TODO Add profile pic and age
 # UserProfile field.
 # User field is a FK to Django's AUTH USER MODEL containing: username, password and email address.
 class UserProfile(models.Model):
@@ -41,6 +43,7 @@ class UserProfile(models.Model):
         return str("{}".format(self.user))
 
 
+# TODO Add min/max numbers of players
 # Event field (Matches)
 class Event(models.Model):
     title = models.CharField(max_length=200)

@@ -43,9 +43,9 @@
 }
 
 .famlogo {
-  font-family: 'Frijole', cursive;
+font-family: 'Faster One', cursive;
   font-size: 2.5em;
-  color: black;
+  color: #3498DB;
 }
 
 li > a {
@@ -60,10 +60,12 @@ li > a {
 }
 
 .action-button {
+    position: relative;
 	padding: 7px 30px;
     margin: 0px 7px 7px 0px;
     margin-top: 5%;
-    float: right;
+    right: 0;
+    bottom: 0;
 	border-radius: 7px;
 	font-family: 'Pacifico', cursive;
 	font-size: 25px;
@@ -144,4 +146,8 @@ h4 {
 location_exist {
     color: white;
 
+}
+
+.famlogo:hover {
+    color: #E74C3C;
 }

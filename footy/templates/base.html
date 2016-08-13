@@ -2,37 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> {{ view.page_title }} | Playa ;)</title>
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link href="{% static 'style.css' %}" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans|Slabo+27px|Montserrat|Roboto+Slab|Faster+One|Frijole|Fascinate+Inline|Black+Ops+One'
           rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 <!--Navigation bar-->
+<nav class="navbar navbar-default" role="navigation"  style="background-color: white; border-color: white;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mynav">
+                 <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'footy:show_matches' %}?{{ request.GET.urlencode }}">
+                <span class="famlogo">FIND A MATCH</span></a>   <!--url contains query strings of lat & lng-->
+        </div>
+        <div class="collapse navbar-collapse" id="mynav">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'footy:nearby_matches' %}?{{ request.GET.urlencode }}"> NEARBY MATCHES</a></li>
+                <li><a href="{% url 'footy:add_location' %}?{{ request.GET.urlencode }}"> CREATE A NEW MATCH</a></li>
+                <li><a href="{% url 'footy:my_matches' %}"> MY MATCHES</a></li>
+                <li><a href="{% url 'footy:my_profile' %}"> PROFILE</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'footy:logout' %}">
+                    <span class="glyphicon glyphicon-off"> </span> Log out</a>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 <div class="container">
-    <nav class="navbar">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand famlogo" href="{% url 'footy:show_matches' %}?{{ request.GET.urlencode }}">Find A
-                   Match</a>   <!--url contains query strings of lat & lng-->
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav btn-group-lg">
-                    <li><a href="{% url 'footy:nearby_matches' %}?{{ request.GET.urlencode }}"><span
-                            class="glyphicon glyphicon-map-marker"></span> NEARBY MATCHES</a></li>
-                    <li><a href="{% url 'footy:add_location' %}?{{ request.GET.urlencode }}"> CREATE A NEW MATCH</a></li>
-                    <li><a href="{% url 'footy:my_matches' %}"> MY MATCHES</a></li>
-                    <li><a href="{% url 'footy:my_profile' %}"> PROFILE</a></li>
-                    <li><a href="{% url 'footy:logout' %}">
-                        <span class="glyphicon glyphicon-off"> </span> Log out</a>
-                    </li>
-                </ul>
-                <div class="navbar-right navbar-btn">
-                </div>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
     {% block content %}
     {% endblock %}
 </div>

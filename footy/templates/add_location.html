@@ -18,32 +18,42 @@
 <form name="add_location" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
-        <div id="addlocation_map"></div>
+    <div id="addlocation_map"></div>
     {% buttons %}
-        <button type="submit" class="btn btn-primary btn-lg" id="btn" style="float: right;">
-            Next {% bootstrap_icon "menu-right" %}
-        </button>
+    <button type="submit" class="btn btn-primary btn-lg" id="btn" style="float: right;">
+        Next {% bootstrap_icon "menu-right" %}
+    </button>
     {% endbuttons %}
 </form>
 <script>
+function getURLParameter(name) {
+    return decodeURIComponent(
+        (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+    }
 window.onload = function() {
-    var myLatlng = new google.maps.LatLng(32.071290, 34.793810) // Setting a default lat & lng values
+    var hasParameters = false;
+    var location = window.location.href;
+    var myLatlng;
+
+    // Setting lat & lng default values, take values from url parameters if they exist
+    if (location.includes('?lat')) {
+        myLatlng =  new google.maps.LatLng(getURLParameter('lat'), getURLParameter('lng'));
+        hasParameters = true;
+    } else {
+        myLatlng = new google.maps.LatLng(32.071290, 34.793810)
+    }
     var startPos;
-    console.log("1st");
     var geoSuccess = function(position) {
         startPos = position;
-        var location = window.location.href;
-        console.log('wtf 1');
         // Checking if lat & lng already been taken in the previous pages
-        if(!location.includes('?lat')){
+        if (!location.includes('?lat')) {
             window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
         }
-        myLatlng = new google.maps.LatLng(startPos.coords.latitude, startPos.coords.longitude);
     }
     navigator.geolocation.getCurrentPosition(geoSuccess);
-            console.log('wtf');
 
-    if (navigator.geolocation) {
+    if (navigator.geolocation && hasParameters === false) {
+        console.log('has parameters');
         navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
                 lat: position.coords.latitude,
@@ -54,9 +64,6 @@ window.onload = function() {
             }, function() {
                 handleLocationError(true, map.getCenter());
                 });
-            } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, map.getCenter());
         }
 
         function handleLocationError(browserHasGeolocation, pos) {
@@ -91,6 +98,7 @@ window.onload = function() {
              document.getElementById("id_lat").value =  evt.latLng.lat();
          });
 }
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI"
         async defer></script>

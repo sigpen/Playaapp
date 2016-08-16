@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles bootstrap3 %}
 {% block content %}
-<!--<script src="http://maps.google.com/maps/api/js??key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI&sensor=false"-->
-        <!--type="text/javascript"></script>-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI"
 async defer></script>
 
@@ -18,7 +16,7 @@ var location_list = []
     lat: {{ o.location.point.y }},
     lng: {{ o.location.point.x }}
     }
-location_list.push(obj);
+    location_list.push(obj);
 {% endfor %}
 
 //Getting user's current location
@@ -27,12 +25,11 @@ window.onload = function() {
     var geoSuccess = function(position) {
         startPos = position;
         var location = window.location.href;
-        if(!location.includes('?lat')) {
+        if (!location.includes('?lat')) {
             window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
-        };
+        }
     };
     navigator.geolocation.getCurrentPosition(geoSuccess);
-
 
     //Creating a map
     var map = new google.maps.Map(document.getElementById('nearby_map'), {

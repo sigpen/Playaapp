@@ -1,45 +1,16 @@
 {% extends 'base.html' %}
 {% load staticfiles bootstrap3 %}
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-
-    <style>
-
-    </style>
-    <script src="{% static 'login/js/prefixfree.min.js' %}"></script>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src="{% static 'jquery-3.0.0.min.js' %}"></script>
-    <link href="{% static 'login/login.css' %}" rel="stylesheet">
-
-</head>
-<body>
-{% block content%}
-
-
-<!--<div class="body"></div>-->
-<!--<div class="grad"></div>-->
-<!--<div class="header">-->
-    <!--<div>Find <span> A </span>Match</div>-->
-<!--</div>-->
-<!--<br>-->
-<!--<div class="login">-->
+{% block content %}
+<div class="jumbotron" style="background: transparent;">
     <form method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-
         {% buttons %}
-        <button type="submit" value="Login" class="btn btn-default">Login
-
-        </button>
+            <button type="submit" value="Login" class="btn btn-default form-btn">Login</button>
         {% endbuttons %}
     </form>
     <a href="{% url 'footy:signup' %}">
-        <button class="btn btn-primary">Sign Up</button>
+        <button class="btn btn-primary no-radius" style="font-family: 'Roboto Slab', cursive;">Sign Up</button>
     </a>
-<!--</div>-->
-<!--</div>-->
+</div>
 {% endblock %}
-</body>
-</html>

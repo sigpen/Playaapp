@@ -4,22 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> {{ view.page_title }} | Playa ;)</title>
-    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'style.css' %}" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans|Slabo+27px|Montserrat|Roboto+Slab|Faster+One|Frijole|Fascinate+Inline|Black+Ops+One'
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans|Slabo+27px|Montserrat|Roboto+Slab|Frijole'
           rel='stylesheet' type='text/css'>
 
 </head>
-<body>
+<body class="bg">
 <!--Navigation bar-->
-<nav class="navbar navbar-default" role="navigation"  style="background-color: white; border-color: white;">
+<nav class="navbar navbar-default" role="navigation"  style="background-color: transparent;  border-color: transparent;">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mynav">
-                 <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only" >Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -27,12 +26,13 @@
             <a class="navbar-brand" href="{% url 'footy:show_matches' %}?{{ request.GET.urlencode }}">
                 <span class="famlogo">FIND A MATCH</span></a>   <!--url contains query strings of lat & lng-->
         </div>
-        <div class="collapse navbar-collapse" id="mynav">
+        <div class="collapse navbar-collapse" id="mynav" style=" border-color: transparent;">
             <ul class="nav navbar-nav">
+                <!--urls contain query strings of lat & lng-->
                 <li><a href="{% url 'footy:nearby_matches' %}?{{ request.GET.urlencode }}"> NEARBY MATCHES</a></li>
                 <li><a href="{% url 'footy:add_location' %}?{{ request.GET.urlencode }}"> CREATE A NEW MATCH</a></li>
-                <li><a href="{% url 'footy:my_matches' %}"> MY MATCHES</a></li>
-                <li><a href="{% url 'footy:my_profile' %}"> PROFILE</a></li>
+                <li><a href="{% url 'footy:my_matches' %}?{{ request.GET.urlencode }}"> MY MATCHES</a></li>
+                <li><a href="{% url 'footy:my_profile' %}?{{ request.GET.urlencode }}"> PROFILE</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{% url 'footy:logout' %}">

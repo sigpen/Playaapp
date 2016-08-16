@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
 {% load bootstrap3 %}
 {% load staticfiles %}
-
 {% block content %}
-    <h1>Sign Up</h1> <br>
-
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-            <button type="submit" class="btn btn-primary">
+<h1>Sign Up</h1><br>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">
                 Save {% bootstrap_icon "save" %}
-            </button>
-        {% endbuttons %}
-    </form>
-
+        </button>
+    {% endbuttons %}
+</form>
 {% endblock %}

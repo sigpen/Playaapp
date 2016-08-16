@@ -1,17 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-
  <!--Getting and displaying matches' details-->
 {% for o in object_list %}
-    <div style="position: relative;">
+    <div>
         <div class="matchdetails">
             <h3>Game Title: </h3><h4>{{ o.title }}</h4><br/>
             <h3>Date & Time: </h3><h4>{{ o.time |timeuntil }}</h4><br/>
-            <h3>Location: </h3><h4><a href="{{ o.location.url }}">{{ o.location.title }}</a></h4><br/>
+            <h3>Location: </h3><a href="{{ o.location.url }}"><h4><u>{{ o.location.title }}</u></h4></a><br/>
             {% if request.user.profile not in o.users.all %}
-                <a href="{% url 'footy:join_match' pk=o.pk %}" class="action-button shadow animate green mybtn">Join <span class="glyphicon glyphicon-ok"></span></a>
+                <a href="{% url 'footy:join_match' pk=o.pk %}?{{ request.GET.urlencode }}" class="action-button shadow animate green mybtn">Join <span class="glyphicon glyphicon-ok"></span></a>
             {% elif request.user.profile %}
-                <a href="{% url 'footy:leave_match' pk=o.pk %}" class="action-button shadow animate red mybtn">Leave <span class="glyphicon glyphicon-remove"></span></a>
+                <a href="{% url 'footy:leave_match' pk=o.pk %}?{{ request.GET.urlencode }}" class="action-button shadow animate red mybtn">Leave <span class="glyphicon glyphicon-remove"></span></a>
             {% endif %}
             <h3>Players: </h3><br/>
             {% for users in o.users.all %}
@@ -30,12 +29,12 @@ window.onload = function() {
     var geoSuccess = function(position) {
         startPos = position;
         var location = window.location.href;
-        if(!location.includes('?lat')) {
+        if (!location.includes('?lat')) {
             window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
         }
     }
     navigator.geolocation.getCurrentPosition(geoSuccess);
-};
+}
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI"
         async defer></script>

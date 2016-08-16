@@ -12,7 +12,7 @@ unit_srid = 4326
 # Django's auth user model field
 class UserForm(forms.ModelForm):
     password = forms.CharField(max_length=200, widget=forms.PasswordInput())
-    phone_number = forms.CharField(max_length=200)
+    phone_number = forms.CharField(max_length=200, required=False)
 
     # Hashing password
     def save(self, commit=True):
@@ -31,8 +31,8 @@ class UserForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=300)
-    password = forms.CharField(max_length=300, widget=forms.PasswordInput())
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'register-input'}))
+    password = forms.CharField(max_length=300, widget=forms.PasswordInput(attrs={'class': 'register-input'}))
 
 
 # TODO Search for users.

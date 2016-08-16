@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load staticfiles bootstrap3 %}
-
 {% block content %}
 <style>
     html, body {
@@ -16,16 +15,15 @@
     width: 60%;
     overflow: auto;
 </style>
-<h1>Create A  New Match</h1> <br>
+<h1>CREATE A NEW MATCH</h1> <br>
 
 <form name="new_match" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
-
     {% buttons %}
-    <button type="submit" class="btn btn-primary">
-        Save {% bootstrap_icon "save" %}
-    </button>
+        <button type="submit" class="btn btn-default form-btn">
+            Save {% bootstrap_icon "save" %}
+        </button>
     {% endbuttons %}
     <div id="test"></div>
 </form>

@@ -6,45 +6,34 @@
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'style.css' %}" rel="stylesheet">
 </head>
-<div>
-    <h1 id="title" style="float: left;">Add a new location</h1>
+<div class="location">
     <div style="float: right;">
         <a href="{% url 'footy:new_match' %}">
-            <button type="button" class="action-button shadow animate blue mybtn location_exist"><h3>Choose an
+            <button type="button" class="action-button shadow animate green mybtn "><h3>Choose an
                 existing location</h3></button>
         </a>
     </div>
+    <h1>ADD A NEW LOCATION:</h1></br>
 </div>
 <form name="add_location" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
     <div id="addlocation_map"></div>
     {% buttons %}
-    <button type="submit" class="btn btn-primary btn-lg" id="btn" style="float: right;">
-        Next {% bootstrap_icon "menu-right" %}
-    </button>
+        <button type="submit" class="btn btn-default btn-lg form-btn" id="btn" style="float: right;">
+            Next {% bootstrap_icon "menu-right" %}
+        </button>
     {% endbuttons %}
 </form>
 <script>
-function getURLParameter(name) {
-    return decodeURIComponent(
-        (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
-    }
 window.onload = function() {
-    var hasParameters = false;
-    var location = window.location.href;
-    var myLatlng;
-
-    // Setting lat & lng default values, take values from url parameters if they exist
-    if (location.includes('?lat')) {
-        myLatlng =  new google.maps.LatLng(getURLParameter('lat'), getURLParameter('lng'));
-        hasParameters = true;
-    } else {
-        myLatlng = new google.maps.LatLng(32.071290, 34.793810)
-    }
-    var startPos;
+    var defaultLatlng = new google.maps.LatLng(32.071290, 34.793810);
+    var lng, lat, currentLatlng;
     var geoSuccess = function(position) {
+        var startPos;
+        var location = window.location.href;
         startPos = position;
+
         // Checking if lat & lng already been taken in the previous pages
         if (!location.includes('?lat')) {
             window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
@@ -52,13 +41,18 @@ window.onload = function() {
     }
     navigator.geolocation.getCurrentPosition(geoSuccess);
 
-    if (navigator.geolocation && hasParameters === false) {
-        console.log('has parameters');
+    if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+            currentLatlng =  new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+            // Pass current lat & lng values to the form
+            document.getElementById("id_lng").value =  currentLatlng.lng();
+            document.getElementById("id_lat").value =  currentLatlng.lat();
+
             marker.setPosition(pos);
             map.setCenter(pos);
             }, function() {
@@ -76,21 +70,17 @@ window.onload = function() {
         // Setting map's settings
         var mapOptions = {
             zoom: 15,
-            center: myLatlng
+            center: defaultLatlng
         }
         var map = new google.maps.Map(document.getElementById("addlocation_map"), mapOptions);
 
         // Place a draggable marker on the map
         var marker = new google.maps.Marker({
-            position: myLatlng,
+            position: defaultLatlng,
             map: map,
             draggable: true,
             title: "Drag me!"
         });
-
-         // Pass lat & lng values to the form
-         document.getElementById("id_lng").value =  myLatlng.lng();
-         document.getElementById("id_lat").value =  myLatlng.lat();
 
          // Save changes of dragged marker
          google.maps.event.addListener(marker, 'dragend', function (evt) {
@@ -98,7 +88,6 @@ window.onload = function() {
              document.getElementById("id_lat").value =  evt.latLng.lat();
          });
 }
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChig6ije2wDaAL7zUaZ2a_adjTKS5OkSI"
         async defer></script>

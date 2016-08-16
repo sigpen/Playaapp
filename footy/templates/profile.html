@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles bootstrap3 %}
-
 {% block content %}
-        <h4>Username: {{ object.user }}</h4><br/>
-        <h4>Phone Number: {{ object.phone_number }} </h4>
-
-
+        <h3>Username: </h3><h4>{{ object.user }}</h4><br/>
+        <h3>Phone Number: </h3> <h4>{{ object.phone_number }} </h4>
 {% endblock %}

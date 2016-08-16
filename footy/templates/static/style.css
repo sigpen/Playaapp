@@ -1,12 +1,8 @@
-.title {
-    font-family: Damion, cursive;
-    font-size: 46px;
-    color: #2A412F;
-}
 
-.subtitle {
-    font-family: Damion, cursive;
-    font-size: 34px;
+/* Background */
+.bg {
+    background: url('pics/blue-torres.jpg'), #014EFF;
+    background-repeat: no-repeat, repeat;
 }
 
 .logout-btn {
@@ -19,21 +15,84 @@
     margin-bottom: 15%;
 }
 
+.form-btn {
+    border-radius: 0;
+    background-color: #FFF;
+    font-family: 'Roboto Slab', cursive;
+    font-weight: 700;
+
+}
+
 .matchdetails {
     width: 50%;
 }
 
+@media(max-width:700px){
+    .matchdetails {
+        width: 100%;
+    }
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: white;
+}
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    background-color: black;
+    border-color: black;
+}
+
 .form-control {
         border: 0;
-        border-bottom: 1px solid #555;
-        background-color: #fff;
-        font-weight: 300;
+        border-bottom: 1px solid #FFF;
+        background-color: #014EFF !important;
+        font-weight: 700;
         padding-right: 0;
         border-radius: 0;
         box-shadow: 0 0 0 0;
         width: 39%;
+        color: #FFF;
+        font-size: 16px;
 
-    }
+}
+
+/*Collapsing at 946px width, preventing 3 rows of navbar */
+@media (max-width:946px) {
+    .navbar-header {
+      float: none;
+  }
+  .navbar-left,.navbar-right {
+      float: none !important;
+  }
+  .navbar-toggle {
+      display: block;
+  }
+  .navbar-collapse {
+      border-top: 1px solid transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-fixed-top {
+      top: 0;
+      border-width: 0 0 1px;
+  }
+  .navbar-collapse.collapse {
+      display: none!important;
+  }
+  .navbar-nav {
+      float: none!important;
+      margin-top: 7.5px;
+  }
+  .navbar-nav>li {
+      float: none;
+  }
+  .navbar-nav>li>a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+  .collapse.in{
+      display:block !important;
+  }
+}
+
 .form-control:hover {
     border-shadow: 0 0 0 0;
 }
@@ -43,15 +102,45 @@
 }
 
 .famlogo {
-font-family: 'Faster One', cursive;
-  font-size: 2.5em;
-  color: #3498DB;
+    font-family: 'Frijole', cursive;
+    font-size: 2em;
+    color: white;
 }
 
-li > a {
-    font-family: 'Roboto Slab', serif;
+@media(max-width:320px){
+    .famlogo {
+        font-size: 1em;
+    }
+
+}
+
+@media(max-width:946px) and (min-width:321px){
+    .famlogo {
+        font-size: 1.2em;
+    }
+}
+
+.famlogo:hover {
+    color: #E74C3C;
+}
+
+.navbar-default .navbar-nav li > a {
+    font-family: 'Frijole', serif;
     font-size: 1em;
-    color: #002A09;
+    /* color: #002A09; */
+     color: white;
+}
+
+@media (max-width=946px){
+    .navbar-default .navbar-nav li > a {
+    font-family: 'Frijole', serif;
+    font-size: 13px;
+     color: white;
+    }
+}
+
+.navbar-default .navbar-nav li > a:hover {
+    background-color: #FFF;
 }
 
 .animate {
@@ -68,7 +157,7 @@ li > a {
     bottom: 0;
 	border-radius: 7px;
 	font-family: 'Pacifico', cursive;
-	font-size: 25px;
+	font-size: 23px;
 	color: #FFF;
 	text-decoration: none;
 }
@@ -103,18 +192,18 @@ li > a {
 }
 
 h1 {
-        font-family: 'Montserrat', cursive;
+        font-family: 'Roboto Slab', cursive;
 }
 
 h3 {
-    font-family: 'Montserrat', cursive;
+    font-family: 'Roboto Slab', cursive;
     display: inline;
 }
 
 h4 {
     font-family: 'Montserrat', cursive;
      display: inline;
-     color: #4D4A4A;
+     color: #FFF;
 }
 
 #nearby_map {
@@ -124,7 +213,7 @@ h4 {
     margin:auto;
     }
 
-@media(max-width:500px){
+@media(max-width:700px){
     #nearby_map {
     width: 100%;
     }
@@ -136,18 +225,13 @@ h4 {
 }
 
 #addlocation_map {
-        position: relative;
-        right: 0;
         height: 50%;
-        width: 50%;
+        width: 100%;
         overflow: auto;
+        left: 0;
 }
 
-location_exist {
-    color: white;
-
-}
-
-.famlogo:hover {
-    color: #E74C3C;
+.new_location {
+    width: 55%;
+    height: 100%;
 }

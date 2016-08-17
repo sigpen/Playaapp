@@ -26,7 +26,7 @@ GEOS_LIBRARY_PATH = r"C:\OSGeo4W\bin\geos_c.dll"
 SECRET_KEY = '8)yikk!)n=(%e0b*pbled0r_dep3$@bj#nmiyx!cgz21c9b7%8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
-    'floppyforms',
 
     # Extras
 
@@ -89,7 +88,7 @@ WSGI_APPLICATION = 'playa.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'postgres',
+#         'NAME': 'playa',
 #         'USER': 'postgres',
 #         'PASSWORD': 'orel123',
 #         'HOST': 'localhost',
@@ -99,9 +98,11 @@ WSGI_APPLICATION = 'playa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'playa',
+        'NAME': 'fam',
         'USER': 'postgres',
         'PASSWORD': 'orel123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 # Password validation

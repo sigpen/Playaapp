@@ -116,7 +116,7 @@
 
 @media(max-width:946px) and (min-width:321px){
     .famlogo {
-        font-size: 1.2em;
+        font-size: 2em;
     }
 }
 
@@ -135,7 +135,7 @@
     .navbar-default .navbar-nav li > a {
     font-family: 'Frijole', serif;
     font-size: 13px;
-     color: white;
+    color: white;
     }
 }
 

@@ -11,13 +11,11 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-GEOS_LIBRARY_PATH = r"C:\OSGeo4W\bin\geos_c.dll"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -28,7 +26,7 @@ SECRET_KEY = '8)yikk!)n=(%e0b*pbled0r_dep3$@bj#nmiyx!cgz21c9b7%8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -98,9 +96,9 @@ WSGI_APPLICATION = 'playa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'fam',
-        'USER': 'postgres',
-        'PASSWORD': 'orel123',
+        'NAME': 'play',
+        'USER': 'orelb',
+        'PASSWORD': 'blink182',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -139,15 +137,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    '/footy/templates/static/',
-    os.path.join(BASE_DIR, 'footy/templates/static/'),
-]
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
 
+STATIC_ROOT =  os.path.join(BASE_DIR, "static")
+
+STATICFILES_DIRS = [
+	 "/home/orelz/Playapp/footy/templates/static",
+	]

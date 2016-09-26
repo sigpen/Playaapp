@@ -35,7 +35,7 @@ window.onload = function() {
         startPos = position;
 
         // Checking if lat & lng already been taken in the previous pages
-        if (!location.includes('?lat')) {
+        if (!location.includes('lat')) {
             window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
         }
     }

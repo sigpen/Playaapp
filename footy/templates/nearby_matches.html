@@ -25,7 +25,7 @@ window.onload = function() {
     var geoSuccess = function(position) {
         startPos = position;
         var location = window.location.href;
-        if (!location.includes('?lat')) {
+        if (!location.includes('lat')) {
             window.location=location.split('?')[0]+'?lat='+startPos.coords.latitude+'&lng='+startPos.coords.longitude;
         }
     };

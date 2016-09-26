@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> {{ view.page_title }} | Playa ;)</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'style.css' %}" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans|Slabo+27px|Montserrat|Roboto+Slab|Frijole'
@@ -24,7 +24,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{% url 'footy:show_matches' %}?{{ request.GET.urlencode }}">
-                <span class="famlogo">FIND A MATCH</span></a>   <!--url contains query strings of lat & lng-->
+                <span class="famlogo">Team Up</span></a>   <!--url contains query strings of lat & lng-->
         </div>
         <div class="collapse navbar-collapse" id="mynav" style=" border-color: transparent;">
             <ul class="nav navbar-nav">

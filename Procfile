@@ -1,1 +1,1 @@
-web: gunicorn Playa.wsgi --log-file -
+web: gunicorn playa.wsgi --log-file -

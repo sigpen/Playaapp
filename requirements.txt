@@ -14,3 +14,4 @@ simplegeneric==0.8.1
 six==1.10.0
 traitlets==4.2.1
 gunicorn==19.6.0
+dj-database-url==0.4.2

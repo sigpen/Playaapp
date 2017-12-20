@@ -1,27 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
  <!--Getting and displaying matches' details-->
-{% for o in object_list %}
-    <div>
-        <div class="matchdetails">
-            <h3>Game Title: </h3><h4>{{ o.title }}</h4><br/>
-            <h3>Date & Time: </h3><h4>{{ o.time |timeuntil }}</h4><br/>
-            <h3>Location: </h3><a href="{{ o.location.url }}"><h4><u>{{ o.location.title }}</u></h4></a><br/>
-            {% if request.user.profile not in o.users.all %}
-                <a href="{% url 'footy:join_match' pk=o.pk %}?{{ request.GET.urlencode }}" class="action-button shadow animate green mybtn">Join <span class="glyphicon glyphicon-ok"></span></a>
-            {% elif request.user.profile %}
-                <a href="{% url 'footy:leave_match' pk=o.pk %}?{{ request.GET.urlencode }}" class="action-button shadow animate red mybtn">Leave <span class="glyphicon glyphicon-remove"></span></a>
-            {% endif %}
-            <h3>Players: </h3><br/>
-            {% for users in o.users.all %}
-                <h4>{{ users.user }}</h4><br/>
-            {% endfor %}
-            <h3>Comments/Extras:</h3> <h4> {{ o.extras }}</h4><br/>
-            <hr>
+{% if object_list %}
+    {% for o in object_list %}
+        <div>
+            <div class="matchdetails">
+                <h3>Game Title: </h3><h4>{{ o.title }}</h4><br/>
+                <h3>Date & Time: </h3><h4>{{ o.time |timeuntil }}</h4><br/>
+                {% if request.user.profile not in o.users.all %}
+                    <a href="{% url 'footy:join_match' pk=o.pk %}?{{ request.GET.urlencode }}" class="action-button shadow animate green mybtn">Join <span class="glyphicon glyphicon-ok"></span></a>
+                {% elif request.user.profile %}
+                    <a href="{% url 'footy:leave_match' pk=o.pk %}?{{ request.GET.urlencode }}" class="action-button shadow animate red mybtn">Leave <span class="glyphicon glyphicon-remove"></span></a>
+                {% endif %}
+                <h3>Players: </h3><br/>
+                {% for users in o.users.all %}
+                    <h4>{{ users.user }}</h4><br/>
+                {% endfor %}
+                <h3>Comments/Extras:</h3> <h4> {{ o.extras }}</h4><br/>
+                <hr>
+            </div>
         </div>
-    </div>
-{% endfor %}
-
+    {% endfor %}
+{% endif %}
 <script>
 // Checking user's current location and getting it if needed to
 window.onload = function() {

@@ -19,8 +19,6 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# GEOS_LIBRARY_PATH = r"C:\OSGeo4W\bin\geos_c.dll"
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -28,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8)yikk!)n=(%e0b*pbled0r_dep3$@bj#nmiyx!cgz21c9b7%8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -86,7 +84,7 @@ WSGI_APPLICATION = 'playa.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-#
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -97,16 +95,7 @@ WSGI_APPLICATION = 'playa.wsgi.application'
 #         'PORT': '',
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'fam',
-        'USER': 'postgres',
-        'PASSWORD': 'orel123',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -152,10 +141,47 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config()
+# DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
-DATABASES['default'] =  dj_database_url.config()
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'fam',
+#         'USER': 'postgres',
+#         'PASSWORD': 'orel123',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'dc0p9h95naki2t',
+#         'USER': 'wfuileohtxnmbf',
+#         'PASSWORD': 'd884149626b3f4233cdd1d8658e7331d99b01526b989cd2b3ad36667a3095258',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'playa',
+        'USER': 'postgres',
+        'PASSWORD': 'orel123',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
 
 GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
 
+# GEOS_LIBRARY_PATH = r"C:\OSGeo4W\bin\geos_c.dll"

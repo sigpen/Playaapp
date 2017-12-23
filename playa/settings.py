@@ -60,6 +60,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'playa.urls'
@@ -130,6 +131,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')	
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/footy/templates/static/',
@@ -179,7 +184,6 @@ DATABASES = {
 }
 
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-
 
 GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')

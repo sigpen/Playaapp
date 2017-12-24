@@ -174,16 +174,16 @@ DATABASES['default'] = dj_database_url.config()
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'playa',
-        'USER': 'postgres',
-        'PASSWORD': 'orel123',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+# DATABASES = {
+# #     'default': {
+# #         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+# #         'NAME': 'playa',
+# #         'USER': 'postgres',
+# #         'PASSWORD': 'orel123',
+# #         'HOST': 'localhost',
+# #         'PORT': '',
+# #     }
+# # }
 
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 

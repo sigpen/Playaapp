@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 {% load staticfiles bootstrap3 %}
 {% block content %}
+
+
 <div class="jumbotron" style="background: transparent;">
+    <div>
+        <h2><u>Guest user details</u></h2>
+        <h3>User: user </h3><br/>
+        <h3>Password: user123</h3>
+        <br/>
+        <br/>
+        <br/>
+    </div>
     <form method="post">
         {% csrf_token %}
         {% bootstrap_form form %}

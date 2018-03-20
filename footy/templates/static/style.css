@@ -236,16 +236,6 @@ h4 {
     height: 100%;
 }
 
-@media (max-width: 1200px) and (min-width:946px){
-    .famlogo {
-        font-size: 2.5rem;
-    }
-    .navbar-default .navbar-nav li > a {
-        line-height: 2.5rem;
-        font-size: 1.5rem;
-    }
-}
-
 @media (min-width: 946px) {
 
     #mynav > ul li:not(:first-child):after {
@@ -259,5 +249,13 @@ h4 {
 
     .logout-nav-btn {
         font-size: 1rem;
+    }
+
+    .famlogo {
+        font-size: 2.5rem;
+    }
+    .navbar-default .navbar-nav li > a {
+        line-height: 2.5rem;
+        font-size: 1.5rem;
     }
 }

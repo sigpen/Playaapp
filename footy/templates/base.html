@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> {{ view.page_title }} | Playa ;)</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'style.css' %}" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans|Slabo+27px|Montserrat|Roboto+Slab|Frijole'
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans|Slabo+27px|Montserrat|Roboto+Slab|Frijole|Inconsolata'
           rel='stylesheet' type='text/css'>
 
 </head>
@@ -27,18 +27,19 @@
                 <span class="famlogo">FIND A MATCH</span></a>   <!--url contains query strings of lat & lng-->
         </div>
         <div class="collapse navbar-collapse" id="mynav" style=" border-color: transparent;">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
                 <!--urls contain query strings of lat & lng-->
                 <li><a href="{% url 'footy:nearby_matches' %}?{{ request.GET.urlencode }}"> NEARBY MATCHES</a></li>
                 <li><a href="{% url 'footy:add_location' %}?{{ request.GET.urlencode }}"> CREATE A NEW MATCH</a></li>
                 <li><a href="{% url 'footy:my_matches' %}?{{ request.GET.urlencode }}"> MY MATCHES</a></li>
                 <li><a href="{% url 'footy:my_profile' %}?{{ request.GET.urlencode }}"> PROFILE</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
                 <li><a href="{% url 'footy:logout' %}">
-                    <span class="glyphicon glyphicon-off"> </span> Log out</a>
+                    <span class="glyphicon glyphicon-off logout-nav-btn"></span> LOGOUT</a>
                 </li>
             </ul>
+            <!--<ul class="nav navbar-nav navbar-right">-->
+
+            <!--</ul>-->
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

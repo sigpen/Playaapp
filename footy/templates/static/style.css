@@ -103,7 +103,7 @@
 
 .famlogo {
     font-family: 'Frijole', cursive;
-    font-size: 2em;
+    font-size: 3.2rem;
     color: white;
 }
 
@@ -125,15 +125,15 @@
 }
 
 .navbar-default .navbar-nav li > a {
-    font-family: 'Frijole', serif;
-    font-size: 1em;
+    font-family: 'Inconsolata', serif;
+    font-size: 1.2rem;
+    line-height: 3.2rem;
     /* color: #002A09; */
      color: white;
 }
 
 @media (max-width=946px){
     .navbar-default .navbar-nav li > a {
-    font-family: 'Frijole', serif;
     font-size: 13px;
      color: white;
     }
@@ -215,23 +215,49 @@ h4 {
 
 @media(max-width:700px){
     #nearby_map {
-    width: 100%;
+        width: 100%;
     }
 
     .container {
-    width: 100%;
-    padding:0;
+        width: 100%;
+        padding:0;
     }
 }
 
 #addlocation_map {
-        height: 50%;
-        width: 100%;
-        overflow: auto;
-        left: 0;
+    height: 50%;
+    width: 100%;
+    overflow: auto;
+    left: 0;
 }
 
 .new_location {
     width: 55%;
     height: 100%;
+}
+
+@media (max-width: 1200px) and (min-width:946px){
+    .famlogo {
+        font-size: 2.5rem;
+    }
+    .navbar-default .navbar-nav li > a {
+        line-height: 2.5rem;
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 946px) {
+
+    #mynav > ul li:not(:first-child):after {
+      content: "";
+      border-right: 1px solid white;
+      position: absolute;
+      line-height: 2.5rem;
+      top: 40%;
+      height: 1.2rem;
+    }
+
+    .logout-nav-btn {
+        font-size: 1rem;
+    }
 }
